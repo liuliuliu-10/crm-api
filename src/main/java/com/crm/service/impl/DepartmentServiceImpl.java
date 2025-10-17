@@ -163,11 +163,12 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
             }
             baseMapper.updateById(department);
         }
+
     }
 
     @Override
     public void removeDepartment(IdQuery query) {
-        List<SysManager> sysManagers = sysManagerMapper.selectList(new LambdaQueryWrapper<SysManager>().eq(SysManager::getDepartmentId, query.getId()));
+        List<SysManager> sysManagers = sysManagerMapper.selectList(new LambdaQueryWrapper<SysManager>().eq(SysManager::getDepartId, query.getId()));
         if (!sysManagers.isEmpty()) {
             throw new ServerException("部门下有管理员,请解绑后再删除");
         }
