@@ -2,6 +2,7 @@ package com.crm.mapper;
 
 import com.crm.entity.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.yulichang.base.MPJBaseMapper;
 
 /**
  * <p>
