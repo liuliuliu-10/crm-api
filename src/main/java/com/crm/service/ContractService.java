@@ -1,7 +1,11 @@
 package com.crm.service;
 
+import com.crm.common.result.PageResult;
 import com.crm.entity.Contract;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.crm.query.ContractQuery;
+import com.crm.vo.ContractVO;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -13,4 +17,16 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ContractService extends IService<Contract> {
 
+    /**
+     * 合同列表 - 分页
+     * @param query
+     * @return
+     */
+    PageResult<ContractVO> getPage(ContractQuery query);
+
+    /**
+     * 新增合同
+     * @param contractVO
+     */
+    void saveOrUpdate(ContractVO contractVO);
 }
