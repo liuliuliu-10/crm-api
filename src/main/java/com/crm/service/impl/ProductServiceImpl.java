@@ -1,15 +1,18 @@
 package com.crm.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.crm.common.exception.ServerException;
 import com.crm.common.result.PageResult;
+import com.crm.entity.Customer;
 import com.crm.entity.Product;
 import com.crm.mapper.ProductMapper;
 import com.crm.query.ProductQuery;
 import com.crm.service.ProductService;
-import io.micrometer.common.util.StringUtils;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -78,4 +81,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
         onProduct.setOnShelfTime(null);
         baseMapper.update(onProduct, wrapper);
     }
+
+
 }

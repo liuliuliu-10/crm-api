@@ -28,7 +28,7 @@ public interface ProductService extends IService<Product> {
     void saveOrEdit(Product product);
 
     /**
-     * 批量修改商品状态
+     * 批量更新商品状态
      */
     void batchUpdateProductState();
 }

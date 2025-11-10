@@ -21,7 +21,6 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
         strictInsertFill(metaObject, Constant.UPDATE_TIME, LocalDateTime.class, LocalDateTime.now());
         // 删除标识
         strictInsertFill(metaObject, Constant.DELETE_FLAG, Integer.class, 0);
-//        strictInsertFill(metaObject, Constant.DELETE_FLAG, Byte.class, (byte)0);
     }
 
     @Override

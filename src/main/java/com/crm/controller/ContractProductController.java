@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2025-11-02
  */
 @RestController
-@RequestMapping("/crm/contractProduct")
+@RequestMapping("contractProduct")
 public class ContractProductController {
 
 }

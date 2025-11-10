@@ -1,6 +1,5 @@
 package com.crm.entity;
 
-import cn.hutool.core.io.unit.DataUnit;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -16,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,7 +56,10 @@ public class Department {
     @TableField(value = "delete_flag", fill = FieldFill.INSERT)
     @TableLogic
     @JsonIgnore
-    private Integer deleteFlag;
+    private Integer deleteFlag = 0; // 设置默认值，0表示未删除
+
+    // getter/setter方法...
+
 
     @ApiModelProperty("创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
@@ -70,7 +71,6 @@ public class Department {
     @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private LocalDateTime updateTime;
 
-    @Schema(description = "子部门")
     @TableField(exist = false)
     private List<Department> children = new ArrayList<>();
 }

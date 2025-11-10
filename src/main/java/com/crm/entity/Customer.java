@@ -56,7 +56,7 @@ public class Customer {
 
     @ApiModelProperty("跟进状态 0-新客，1-待再次沟通，2-有意向，3-转入商机，4-无效")
     @TableField("follow_status")
-    private Byte followStatus;
+    private Integer followStatus;
 
     @ApiModelProperty("下次跟进时间")
     @TableField("next_follow_status")

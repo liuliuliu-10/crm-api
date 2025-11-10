@@ -1,14 +1,15 @@
 package com.crm.vo;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 /**
- * @Author: liuliu
- * @Date: 2025/10/26
+ * @Author: zmy
+ * @Date: 2025/11/2
+ * @Version: 1.0
  */
 @Data
 public class ProductVO {
@@ -22,4 +23,8 @@ public class ProductVO {
     private BigDecimal totalPrice;
     private Integer count;
     private BigDecimal price;
+
+
+    public Integer getId() {if (this.id == null) {return this.pId;}return this.id;}
+
 }

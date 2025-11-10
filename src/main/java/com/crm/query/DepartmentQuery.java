@@ -5,8 +5,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
- * @Author: liuliu
+ * @Author: 夏企博
  * @Date: 2025/10/12
+ * @Version: 1.0
  */
 @Data
 public class DepartmentQuery extends Query {

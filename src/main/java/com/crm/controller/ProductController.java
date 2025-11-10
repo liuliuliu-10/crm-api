@@ -1,11 +1,12 @@
 package com.crm.controller;
 
+import com.crm.common.aop.Log;
 import com.crm.common.result.PageResult;
 import com.crm.common.result.Result;
 import com.crm.entity.Product;
+import com.crm.enums.BusinessType;
 import com.crm.query.ProductQuery;
 import com.crm.service.ProductService;
-import com.crm.vo.ProductVO;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -33,6 +35,7 @@ public class ProductController {
 
     @PostMapping("page")
     @Operation(summary = "分页查询")
+    @Log(title = "商品列表-分页", businessType = BusinessType.SELECT)
     public Result<PageResult<Product>> getPage(@RequestBody @Validated ProductQuery query) {
         return Result.ok(productService.getPage(query));
     }
@@ -43,4 +46,6 @@ public class ProductController {
         productService.saveOrEdit(product);
         return Result.ok();
     }
+
+
 }

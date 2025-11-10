@@ -1,5 +1,6 @@
 package com.crm.utils;
 
+
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,9 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: liuliu
- * @Date: 2025/10/26
- */
+ * @description:
+ * @author: yeshang
+ * @create: 2025-10-26 10:08
+ **/
 @Configuration
 public class OssClientConfig {
     @Value("${aliyun.oss.endpoint}")

@@ -84,11 +84,11 @@ public class Product {
 
     @ApiModelProperty("上架时间")
     @TableField(value = "on_shelf_time", updateStrategy = FieldStrategy.IGNORED)
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "Asia/shanghai")
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "Asia/Shanghai")
     private LocalDateTime onShelfTime;
 
     @ApiModelProperty("下架时间")
-    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "Asia/shanghai")
     @TableField(value = "off_shelf_time", updateStrategy = FieldStrategy.IGNORED)
+    @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN, timezone = "Asia/Shanghai")
     private LocalDateTime offShelfTime;
 }

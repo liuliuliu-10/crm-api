@@ -1,16 +1,14 @@
 package com.crm.utils;
 
-import io.micrometer.common.util.StringUtils;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 /**
- * @Author: liuliu
+ * @Author: zmy
  * @Date: 2025/11/2
+ * @Version: 1.0
  */
-
 public class NumberUtils {
 
     public static String generateContractNumber(){

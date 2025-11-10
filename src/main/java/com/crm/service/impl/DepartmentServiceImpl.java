@@ -14,7 +14,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -27,8 +30,21 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Department> implements DepartmentService {
-
     private final SysManagerMapper sysManagerMapper;
+
+
+    @Override
+    public void removeDepartment(IdQuery query) {
+        List<SysManager> sysManagers = sysManagerMapper.selectList(new LambdaQueryWrapper<SysManager>().eq(SysManager::getDepartId, query.getId()));
+        if (!sysManagers.isEmpty()) {
+            throw new ServerException("部门下有管理员,请解绑后再删除");
+        }
+        // 删除该部门以及子部门
+        List<Department> departments = baseMapper.selectList(new LambdaQueryWrapper<Department>().like(Department::getParentIds, query.getId()).or().eq(Department::getId, query.getId()));
+        removeBatchByIds(departments);
+    }
+
+
 
     @Override
     public PageResult<Department> getPage(DepartmentQuery query) {
@@ -37,39 +53,32 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         if (query.getName() != null && !query.getName().isEmpty()) {
             wrapper.like(Department::getName, query.getName());
         }
-
-        // 先查出所有符合条件的部门，用于后续树结构构建
-        List<Department> allMatched = baseMapper.selectList(wrapper);
-        if (allMatched.isEmpty()) {
-            return new PageResult<>(Collections.emptyList(), 0L);
+        List<Department> departments = baseMapper.selectList(wrapper);
+        if (departments.isEmpty()) {
+            return new PageResult<>(Collections.emptyList(), 0);
         }
 
-        // 2、找到最小层级（顶级层级）
-        Integer minLevel = allMatched.stream()
-                .map(Department::getLevel)
-                .min(Integer::compareTo)
-                .orElse(0);
+        // 2、找到最小的层级
+        Integer minLevel = departments.stream().map(Department::getLevel).min(Integer::compareTo).orElse(0);
 
-        // 3、筛选出顶级部门
-        List<Department> topDepartments = allMatched.stream()
-                .filter(d -> d.getLevel().equals(minLevel))
-                .toList();
+//        3.筛选出顶级的部门数据
+        List<Department> topDepartment = departments.stream().filter(department -> department.getLevel().equals(minLevel)).toList();
 
-        // 4、分页顶级部门
-        int total = topDepartments.size();
-        int fromIndex = (query.getPage() - 1) * query.getLimit();
-        int toIndex = Math.min(fromIndex + query.getLimit(), total);
-
-        if (fromIndex >= total) {
-            return new PageResult<>(Collections.emptyList(),total);
+// 4、顶级部门分页
+        int total = topDepartment.size();
+        int formIndex = (query.getPage() - 1) * query.getLimit();
+        int toIndex = Math.min(formIndex + query.getLimit(), total);
+        if (formIndex >= total) {
+            return new PageResult<>(Collections.emptyList(), total);
         }
+// 5、顶级分页数据处理
+        List<Department> result = topDepartment.subList(formIndex, toIndex);
+// 6、构建父子级关系数据
+        result.forEach(item -> getChildList(item, departments));
 
-        List<Department> pagedTopDepartments = topDepartments.subList(fromIndex, toIndex);
+        return new PageResult<>(result, total);
 
-        // 5、为每个顶级部门构建完整的子树
-        pagedTopDepartments.forEach(dept -> getChildList(dept, allMatched));
 
-        return new PageResult<>(pagedTopDepartments,total);
     }
 
     private Department getChildList(Department department, List<Department> list) {
@@ -103,6 +112,7 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         });
         return parentDepartments;
     }
+
 
     @Override
     public void saveOrEditDepartment(Department department) {
@@ -164,16 +174,5 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
             baseMapper.updateById(department);
         }
 
-    }
-
-    @Override
-    public void removeDepartment(IdQuery query) {
-        List<SysManager> sysManagers = sysManagerMapper.selectList(new LambdaQueryWrapper<SysManager>().eq(SysManager::getDepartId, query.getId()));
-        if (!sysManagers.isEmpty()) {
-            throw new ServerException("部门下有管理员,请解绑后再删除");
-        }
-        // 删除该部门以及子部门
-        List<Department> departments = baseMapper.selectList(new LambdaQueryWrapper<Department>().like(Department::getParentIds, query.getId()).or().eq(Department::getId, query.getId()));
-        removeBatchByIds(departments);
     }
 }

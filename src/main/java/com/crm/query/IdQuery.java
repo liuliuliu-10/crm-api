@@ -1,14 +1,13 @@
 package com.crm.query;
 
-
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * @Author: liuliu
+ * @Author: 夏企博
  * @Date: 2025/10/12
+ * @Version: 1.0
  */
-
 @Data
 public class IdQuery {
 

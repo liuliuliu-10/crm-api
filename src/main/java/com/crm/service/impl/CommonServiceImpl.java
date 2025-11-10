@@ -1,8 +1,6 @@
 package com.crm.service.impl;
 
 import com.aliyun.oss.OSSClient;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.crm.entity.Product;
 import com.crm.service.CommonService;
 import com.crm.vo.FileUrlVO;
 import jakarta.annotation.Resource;
@@ -13,11 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
-
-/**
- * @Author: liuliu
- * @Date: 2025/10/26
- */
 
 @Service
 public class CommonServiceImpl implements CommonService {
@@ -52,5 +45,4 @@ public class CommonServiceImpl implements CommonService {
         fileUrl = "https://" + bucketName + "." + ossClient.getEndpoint().getHost() + "/" + newFileName;
         return new FileUrlVO(fileUrl);
     }
-
 }
