@@ -12,3 +12,17 @@ spring:
       password:   # 如果没有密码，可以不写或写成空字符串
 
 
+
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://8.136.49.241:3306/db_crm?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#    username: root
+#    password: soft@web
+#
+#  data:
+#    redis:
+#      host: 8.136.49.241
+#      port: 6379
+#      password: Q2!zD5$gF8&jH3#kL7* # 如果没有密码，可以不写或写成空字符串

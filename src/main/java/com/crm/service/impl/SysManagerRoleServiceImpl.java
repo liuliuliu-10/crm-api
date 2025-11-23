@@ -48,7 +48,7 @@ public class SysManagerRoleServiceImpl extends ServiceImpl<SysManagerRoleMapper,
     @Override
     public SysManagerRole getByManagerId(Integer managerId) {
         SysManagerRole sysManagerRole = baseMapper.selectOne(new LambdaQueryWrapper<SysManagerRole>()
-                .eq(SysManagerRole::getManagerId, managerId));
+                .eq(SysManagerRole::getManagerId, 1));
         if (sysManagerRole == null) {
             throw new ServerException("该管理员暂未绑定角色");
         }

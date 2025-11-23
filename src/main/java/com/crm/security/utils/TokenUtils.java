@@ -2,6 +2,7 @@ package com.crm.security.utils;
 
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
+import io.lettuce.core.ScriptOutputType;
 import jakarta.servlet.http.HttpServletRequest;
 
 
@@ -10,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public class TokenUtils {
 
-     
+
     /**
      * 生成 AccessToken
      */
@@ -26,6 +27,7 @@ public class TokenUtils {
         if (StrUtil.isBlank(accessToken)) {
             accessToken = request.getParameter("access_token");
         }
+        System.out.println("accessToken:" + accessToken);
 
         return accessToken;
     }

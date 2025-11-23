@@ -24,10 +24,8 @@ import java.util.*;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
- *
-
  */
 @Service
 @AllArgsConstructor
@@ -38,11 +36,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<SysMenuVO> getManagerMenuList(ManagerDetail manager, String type) {
         List<SysMenu> menuList;
         // 系统管理员，拥有最高权限
-        if ("admin".equals(manager.getAccount())) {
-            menuList = baseMapper.getMenuList(type,false);
-        } else {
-            menuList = baseMapper.getManagerMenuList(manager.getId(), type,false);
-        }
+//        if ("admin".equals(manager.getAccount())) {
+//            menuList = baseMapper.getMenuList(type,false);
+//        } else {
+//            menuList = baseMapper.getManagerMenuList(manager.getId(), type,false);
+//        }
+        menuList = baseMapper.getMenuList(type, false);
 
         return TreeUtils.build(SysMenuConvert.INSTANCE.convertList(menuList));
     }
@@ -51,7 +50,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public Set<String> getManagerAuthority(ManagerDetail manager) {
         // 系统管理员，拥有最高权限
         List<String> authorityList;
-        authorityList = baseMapper.getManagerAuthorityList(manager.getId());
+//        authorityList = baseMapper.getManagerAuthorityList(manager.getId());
+        authorityList = baseMapper.getManagerAuthorityList(1);
 
         // 用户权限列表
         Set<String> permsSet = new HashSet<>();
@@ -68,8 +68,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<SysMenuVO> getMenuList(SysMenuQuery query) {
         LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper();
-        if(StringUtils.isNotBlank(query.getTitle())){
-            wrapper.like(SysMenu::getTitle,query.getTitle());
+        if (StringUtils.isNotBlank(query.getTitle())) {
+            wrapper.like(SysMenu::getTitle, query.getTitle());
         }
         wrapper.orderByAsc(SysMenu::getSort);
         List<SysMenu> menuList = baseMapper.selectList(wrapper);
@@ -138,7 +138,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             menuList.add(SysMenuConvert.INSTANCE.convert(menu));
             for (int i = 0; i < menu.getChildren().size(); i++) {
                 SysMenuVO item = menu.getChildren().get(i);
-                if (i < menu.getChildren().size() - 1){
+                if (i < menu.getChildren().size() - 1) {
                     item.setTitle("      " + item.getTitle());
                 } else {
                     item.setTitle("      " + item.getTitle());
